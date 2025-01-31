@@ -1,0 +1,27 @@
+sensor:
+  id: "microphone"
+  type: "microphone"
+  distribution: "exponential"
+  unit: "dB"
+  min_value: 15
+  max_value: 120
+  mean: 40
+  alpha: 2
+  beta: 3
+  std_dev: 2.3
+  interval_ms: 250
+
+anomaly:
+  generate: true
+  margin: 12
+  prob: 0.12
+
+pattern:
+  generate: true
+  interval: "second"
+  amplitude: 3.8
+  repeat: 60
+
+kafka:
+  brokers: "kafka.default.svc.cluster.local:9092"
+  topic: "mic-data"

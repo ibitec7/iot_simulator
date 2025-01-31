@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: light-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: light-consumer
+  template:
+    metadata:
+      labels:
+        app: light-consumer
+    spec:
+      containers:
+      - name: light-consumer
+        image: confluentinc/cp-kafka:latest
+        command: ["/bin/bash", "-c", "--"]
+        args:
+          - |
+            kafka-console-consumer --bootstrap-server kafka.default.svc.cluster.local:9092 --topic light-data --from-beginning
+        env:
+        - name: KAFKA_TOPIC
+          value: "light-data"  # Topic you want to consume goes here
+        - name: BOOTSTRAP_SERVERS
+          value: "kafka.default.svc.cluster.local:9092"  # Kafka service DNS name or IP goes here

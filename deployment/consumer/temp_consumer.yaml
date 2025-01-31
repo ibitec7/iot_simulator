@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temp-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temp-consumer
+  template:
+    metadata:
+      labels:
+        app: temp-consumer
+    spec:
+      containers:
+      - name: temp-consumer
+        image: confluentinc/cp-kafka:latest
+        command: ["/bin/bash", "-c", "--"]
+        args:
+          - |
+            kafka-console-consumer --bootstrap-server kafka.default.svc.cluster.local:9092 --topic temp-data --from-beginning
+        env:
+        - name: KAFKA_TOPIC
+          value: "temp-data"  # Topic you want to consume
+        - name: BOOTSTRAP_SERVERS
+          value: "kafka.default.svc.cluster.local:9092"  # Kafka service DNS name or IP

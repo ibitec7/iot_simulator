@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: acc-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: acc-producer
+  template:
+    metadata:
+      labels:
+        app: acc-producer
+    spec:
+      containers:
+      - name: acc-producer
+        image: ibitec/iot_sensor:latest
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: kafka.default.svc.cluster.local:9092
+        volumeMounts:
+        - name: acc-config-file
+          mountPath: /app/src
+
+      volumes:
+      - name: acc-config-file
+        configMap:
+          name: acc-config-file

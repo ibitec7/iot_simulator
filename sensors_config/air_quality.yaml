@@ -1,0 +1,27 @@
+sensor:
+  id: "aq_sensor1"
+  type: "air_quality"
+  distribution: "lognormal"
+  unit: "µg/m³"
+  min_value: 15
+  max_value: 26
+  mean: 15
+  alpha: 2
+  beta: 3
+  std_dev: 5
+  interval_ms: 2000
+
+anomaly:
+  generate: true
+  margin: 20
+  prob: 0.01
+
+pattern:
+  generate: false
+  interval: "minute"
+  amplitude: 3.6
+  repeat: 60
+
+kafka:
+  brokers: "kafka.default.svc.cluster.local:9092"
+  topic: "aq-data"

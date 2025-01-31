@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aq-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aq-producer
+  template:
+    metadata:
+      labels:
+        app: aq-producer
+    spec:
+      containers:
+      - name: aq-producer
+        image: ibitec/iot_sensor:latest
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: kafka.default.svc.cluster.local:9092
+        volumeMounts:
+        - name: aq-config-file
+          mountPath: /app/src
+
+      volumes:
+      - name: aq-config-file
+        configMap:
+          name: aq-config-file

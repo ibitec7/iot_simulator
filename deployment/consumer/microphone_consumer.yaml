@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microphone-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microphone-consumer
+  template:
+    metadata:
+      labels:
+        app: microphone-consumer
+    spec:
+      containers:
+      - name: microphone-consumer
+        image: confluentinc/cp-kafka:latest
+        command: ["/bin/bash", "-c", "--"]
+        args:
+          - |
+            kafka-console-consumer --bootstrap-server $BOOTSTRAP_SERVERS --topic $KAFKA_TOPIC --from-beginning
+        env:
+        - name: KAFKA_TOPIC
+          value: "mic-data"  # Topic you want to consume goes here
+        - name: BOOTSTRAP_SERVERS
+          value: "kafka.default.svc.cluster.local:9092"  # Kafka service DNS name or IP goes here

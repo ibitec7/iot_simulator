@@ -1,0 +1,16 @@
+[package]
+name = "iot_simulator"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_yaml = "0.9.34"
+serde_json = "1.0.122"
+rand_distr = "0.4.0"
+chrono = "0.4.38"
+log = "0.4.22"
+env_logger = "0.11.5"
+tokio = { version = "1.39.2", features = ["full"] }
+rdkafka = { version = "0.36.2", features = ["ssl"] }
+rand = "0.8"

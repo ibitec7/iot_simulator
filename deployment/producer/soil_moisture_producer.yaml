@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: soil-moisture-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: soil-moisture-producer
+  template:
+    metadata:
+      labels:
+        app: soil-moisture-producer
+    spec:
+      containers:
+      - name: soil-moisture-producer
+        image: ibitec/iot_sensor:latest
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: kafka.default.svc.cluster.local:9092
+        volumeMounts:
+        - name: soil-moisture-config-file
+          mountPath: /app/src
+
+      volumes:
+      - name: soil-moisture-config-file
+        configMap:
+          name: soil-moisture-config-file

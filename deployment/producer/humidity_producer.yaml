@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: humidity-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: humidity-producer
+  template:
+    metadata:
+      labels:
+        app: humidity-producer
+    spec:
+      containers:
+      - name: humidity-producer
+        image: ibitec/iot_sensor:latest
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: kafka.default.svc.cluster.local:9092
+        volumeMounts:
+        - name: humidity-config-file
+          mountPath: /app/src               # Path in container where it mounts dont tamper
+
+      volumes:
+      - name: humidity-config-file
+        configMap:
+          name: humidity-config-file

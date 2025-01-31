@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: acc-config-file
+data:
+    config.yaml: |
+        sensor:
+            id: "acc_sensor1"
+            type: "accelerometer"
+            distribution: "normal"
+            unit: "g"
+            min_value: -5
+            max_value: 5
+            mean: 0
+            alpha: 2
+            beta: 3
+            std_dev: 1
+            interval_ms: 50
+
+        anomaly:
+            generate: true
+            margin: 0.5
+            prob: 0.01
+
+        pattern:
+            generate: false
+            interval: "minute"
+            amplitude: 3.6
+            repeat: 60
+
+        kafka:
+            brokers: "kafka.default.svc.cluster.local:9092"
+            topic: "acc-data"

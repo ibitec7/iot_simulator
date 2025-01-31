@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: temp-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: temp-producer
+  template:
+    metadata:
+      labels:
+        app: temp-producer
+    spec:
+      containers:
+      - name: temp-producer
+        image: ibitec/iot_sensor:latest
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: kafka.default.svc.cluster.local:9092
+        volumeMounts:
+        - name: temp-config-file
+          mountPath: /app/src               # Path in container where it mounts dont tamper
+
+      volumes:
+      - name: temp-config-file
+        configMap:
+          name: temp-config-file

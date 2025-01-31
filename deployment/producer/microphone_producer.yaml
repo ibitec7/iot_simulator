@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: microphone-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: microphone-producer
+  template:
+    metadata:
+      labels:
+        app: microphone-producer
+    spec:
+      containers:
+      - name: microphone-producer
+        image: ibitec/iot_sensor:latest
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: kafka.default.svc.cluster.local:9092
+        volumeMounts:
+        - name: microphone-config-file
+          mountPath: /app/src
+
+      volumes:
+      - name: microphone-config-file
+        configMap:
+          name: microphone-config-file

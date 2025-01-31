@@ -1,0 +1,27 @@
+sensor:
+  id: "temp_sensor1"
+  type: "temperature"
+  distribution: "normal"
+  unit: "Celsius"
+  min_value: 15
+  max_value: 26
+  mean: 22
+  alpha: 2
+  beta: 3
+  std_dev: 2.3
+  interval_ms: 500
+
+anomaly:
+  generate: true
+  margin: 5
+  prob: 0.08
+
+pattern:
+  generate: true
+  interval: "minute"
+  amplitude: 3.6
+  repeat: 60
+
+kafka:
+  brokers: "kafka.default.svc.cluster.local:9092"
+  topic: "temp-data"

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: light-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: light-producer
+  template:
+    metadata:
+      labels:
+        app: light-producer
+    spec:
+      containers:
+      - name: light-producer
+        image: ibitec/iot_sensor:latest
+        env:
+        - name: BOOTSTRAP_SERVERS
+          value: kafka.default.svc.cluster.local:9092
+        volumeMounts:
+        - name: light-config-file
+          mountPath: /app/src
+
+      volumes:
+      - name: light-config-file
+        configMap:
+          name: light-config-file

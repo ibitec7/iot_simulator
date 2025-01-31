@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: light-config-file
+data:
+    config.yaml: |
+        sensor:
+            id: "light_sensor1"
+            type: "light"
+            distribution: "exponential"
+            unit: "lux"
+            min_value: 250
+            max_value: 10000
+            mean: 1000
+            alpha: 2
+            beta: 3
+            std_dev: 2.3
+            interval_ms: 100
+
+        anomaly:
+            generate: true
+            margin: 200
+            prob: 0.02
+
+        pattern:
+            generate: true
+            interval: "hour"
+            amplitude: 500
+            repeat: 24
+
+        kafka:
+            brokers: "kafka.default.svc.cluster.local:9092"
+            topic: "light-data"
