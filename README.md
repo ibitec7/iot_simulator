@@ -1,4 +1,4 @@
-This project focuses on simulating IoT sensor data streams to Apache Kafka as producers.
+Sourcing real-time IoT sensor data is a challenging task as there are barely any sources online. The ones that are available are either not free to use or are limited by their restrictions. This project aims to solve this problem by providing a reliable stream of sensor data that can be scaled and tailored to the user's requirement and specification. All this while being open-source and free to use. The project is scalable, easily configurable and integrates well with other micro-services on Kubernetes.
 
 ## How to Deploy
 1. Start a minikube cluster:
